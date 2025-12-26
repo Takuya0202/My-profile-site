@@ -25,40 +25,43 @@ export default function Header() {
     return () => observer.disconnect()
   }, [])
 
-  const toggleTheme = useCallback(async (event: React.MouseEvent) => {
-    const buttonElement = event.currentTarget as HTMLElement
+  const toggleTheme = useCallback(
+    async (event: React.MouseEvent) => {
+      const buttonElement = event.currentTarget as HTMLElement
 
-    await document.startViewTransition(() => {
-      flushSync(() => {
-        const newTheme = !isDark
-        setIsDark(newTheme)
-        document.documentElement.classList.toggle("dark")
-        localStorage.setItem("theme", newTheme ? "dark" : "light")
-      })
-    }).ready
+      await document.startViewTransition(() => {
+        flushSync(() => {
+          const newTheme = !isDark
+          setIsDark(newTheme)
+          document.documentElement.classList.toggle("dark")
+          localStorage.setItem("theme", newTheme ? "dark" : "light")
+        })
+      }).ready
 
-    const { top, left, width, height } = buttonElement.getBoundingClientRect()
-    const x = left + width / 2
-    const y = top + height / 2
-    const maxRadius = Math.hypot(
-      Math.max(left, window.innerWidth - left),
-      Math.max(top, window.innerHeight - top)
-    )
+      const { top, left, width, height } = buttonElement.getBoundingClientRect()
+      const x = left + width / 2
+      const y = top + height / 2
+      const maxRadius = Math.hypot(
+        Math.max(left, window.innerWidth - left),
+        Math.max(top, window.innerHeight - top)
+      )
 
-    document.documentElement.animate(
-      {
-        clipPath: [
-          `circle(0px at ${x}px ${y}px)`,
-          `circle(${maxRadius}px at ${x}px ${y}px)`,
-        ],
-      },
-      {
-        duration: 400,
-        easing: "ease-in-out",
-        pseudoElement: "::view-transition-new(root)",
-      }
-    )
-  }, [isDark])
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${maxRadius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: 400,
+          easing: "ease-in-out",
+          pseudoElement: "::view-transition-new(root)",
+        }
+      )
+    },
+    [isDark]
+  )
 
   return (
     <header className="w-full py-4 flex items-center justify-between">
@@ -73,13 +76,25 @@ export default function Header() {
           iconDistance={140}
         >
           <DockIcon
-            onClick={() => window.open("https://github.com/Takuya0202", "_blank", "noopener,noreferrer")}
+            onClick={() =>
+              window.open(
+                "https://github.com/Takuya0202",
+                "_blank",
+                "noopener,noreferrer"
+              )
+            }
             className="hover:bg-white/5 dark:hover:bg-black/5 transition-colors"
           >
             <Github className="h-5 w-5 text-foreground" />
           </DockIcon>
           <DockIcon
-            onClick={() => window.open("https://zenn.dev/amethyst", "_blank", "noopener,noreferrer")}
+            onClick={() =>
+              window.open(
+                "https://zenn.dev/amethyst",
+                "_blank",
+                "noopener,noreferrer"
+              )
+            }
             className="hover:bg-white/5 dark:hover:bg-black/5 transition-colors"
           >
             <BookOpen className="h-5 w-5 text-foreground" />
