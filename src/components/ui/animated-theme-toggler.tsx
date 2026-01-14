@@ -5,8 +5,10 @@ import { Moon, Sun } from "lucide-react"
 import { flushSync } from "react-dom"
 
 import { cn } from "@/lib/utils"
+import { BorderBeam } from "@/components/ui/border-beam"
 
-interface AnimatedThemeTogglerProps extends React.ComponentPropsWithoutRef<"button"> {
+interface AnimatedThemeTogglerProps
+  extends React.ComponentPropsWithoutRef<"button"> {
   duration?: number
 }
 
@@ -70,14 +72,35 @@ export const AnimatedThemeToggler = ({
     )
   }, [isDark, duration])
 
+  const Icon = isDark ? Sun : Moon
+
   return (
     <button
       ref={buttonRef}
       onClick={toggleTheme}
-      className={cn(className)}
+      type="button"
+      aria-label="Toggle theme"
+      className={cn(
+        "relative overflow-hidden inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium",
+        "bg-muted/40 dark:bg-muted/20 border border-border/50 backdrop-blur-sm",
+        className
+      )}
       {...props}
     >
-      {isDark ? <Sun /> : <Moon />}
+      <span className="shrink-0 leading-none">
+        <Icon className="h-5 w-5" />
+      </span>
+      <span className="leading-none">Theme</span>
+      <BorderBeam
+        size={100}
+        duration={6}
+        delay={0}
+        colorFrom="#ffaa40"
+        colorTo="#9c40ff"
+        transition={{
+          repeat: Infinity,
+        }}
+      />
       <span className="sr-only">Toggle theme</span>
     </button>
   )
