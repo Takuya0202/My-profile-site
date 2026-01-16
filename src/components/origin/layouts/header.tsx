@@ -1,6 +1,7 @@
 import Link from "next/link"
 import HeaderNav from "./header-nav"
 import { BorderBeam } from "@/components/ui/border-beam"
+import { ShineBorder } from "@/components/ui/shine-border"
 
 export default function Header() {
   return (
@@ -14,9 +15,7 @@ export default function Header() {
 
       {/* border */}
       <div className="relative w-full">
-      <BorderBeam 
-        size={100}
-      />
+        <ShineBorder />
       </div>
     </header>
   )

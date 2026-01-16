@@ -29,16 +29,7 @@ export default function LinkButton({ href, text, icon, className }: props) {
     >
       {icon ? <span className="shrink-0 leading-none">{icon}</span> : null}
       {text ? <span className="leading-none">{text}</span> : null}
-      <BorderBeam
-        size={100}
-        duration={6}
-        delay={0}
-        colorFrom="#ffaa40"
-        colorTo="#9c40ff"
-        transition={{
-          repeat: Infinity,
-        }}
-      />
+      <BorderBeam />
     </button>
   )
 }
